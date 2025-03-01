@@ -76,6 +76,36 @@ success_rates = {"Medifund": 75, "CHAS": 85, "Subsidized Ward Grants": 65}  # Ex
 st.write(f"🔹 Estimated Success Rate: **{success_rates[grant_type]}%**")
 
 st.markdown("---")  
+st.subheader("⏳ Reimbursement Timeframe Estimator")
+
+# Sample data for estimated reimbursement times (can be updated with real data)
+reimbursement_times = {
+    "Medisave": 30,  # Days
+    "Private Insurance (AIA, Prudential, etc.)": 45,
+    "Employer Reimbursement": 60,
+    "Government Subsidy": 90
+}
+
+# User selection
+insurance_type = st.selectbox("🏥 Select Your Insurance or Reimbursement Type:", list(reimbursement_times.keys()) + ["Other"])
+
+# Get estimated reimbursement time
+if insurance_type in reimbursement_times:
+    estimated_days = reimbursement_times[insurance_type]
+else:
+    estimated_days = st.number_input("📅 Enter Estimated Reimbursement Time (days):", min_value=1, value=30)
+
+# Calculate payout date
+import datetime
+today = datetime.date.today()
+payout_date = today + datetime.timedelta(days=estimated_days)
+
+# Display results
+st.info(f"💰 **Estimated Reimbursement Date:** {payout_date.strftime('%d %B %Y')}")
+st.caption("📌 Note: This is an estimate. Actual processing times may vary.")
+
+
+st.markdown("---")  
 st.subheader("🛡️ Are You Over or Under-Insured?")
 
 # Get user inputs
